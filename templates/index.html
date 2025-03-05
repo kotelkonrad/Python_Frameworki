@@ -1,6 +1,87 @@
 {% extends 'home.html' %}
+{% load static %}
 {% block content %}
-<span>
-    Strona domowa
-</span>
+<!-- Sekcja główna 'O nas' -->
+<main class="container mx-auto py-8 px-4">
+  <!-- Nagłówek sekcji -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold mb-4">O nas</h1>
+    <p class="mb-4">
+      Witaj na stronie „O nas”! Tutaj możesz umieścić informacje o zespole,
+      historii projektu, misji czy wartościach, którymi się kierujecie.
+    </p>
+  </div>
+
+  <!-- Przykładowy układ kafelków/sekcji informacyjnych -->
+  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+    <!-- Kafelek 1 -->
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="text-xl font-semibold mb-2">Nasza historia</h2>
+      <p class="text-gray-700">
+        Opowiedz o tym, skąd wziął się pomysł na stronę, jak się rozwijała i
+        jakie były najważniejsze momenty w jej istnieniu.
+      </p>
+    </div>
+    <!-- Kafelek 2 -->
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="text-xl font-semibold mb-2">Nasz zespół</h2>
+      <p class="text-gray-700">
+        Przedstaw osoby stojące za sukcesem strony. Możesz umieścić tu krótkie
+        biogramy i zdjęcia (jeśli to pasuje do Twojego projektu).
+      </p>
+    </div>
+    <!-- Kafelek 3 -->
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="text-xl font-semibold mb-2">Kontakt</h2>
+      <p class="text-gray-700">
+        Zostaw namiary na siebie lub swój zespół. Może to być adres e-mail,
+        formularz kontaktowy lub linki do social mediów.
+      </p>
+    </div>
+  </section>
+
+  <!-- Sekcja z kafelkami gier -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Nasze gry</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- Kafelek gry 1 -->
+      <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+        <img
+          src="{% static 'images/game1.png' %}"
+          alt="Gra 1"
+          class="mb-2"
+        />
+        <p class="text-center">Gra 1</p>
+      </div>
+      <!-- Kafelek gry 2 -->
+      <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+        <img
+          src="{% static 'images/game2.png' %}"
+          alt="Gra 2"
+          class="mb-2"
+        />
+        <p class="text-center">Gra 2</p>
+      </div>
+      <!-- Kafelek gry 3 -->
+      <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+        <img
+          src="{% static 'images/game3.png' %}"
+          alt="Gra 3"
+          class="mb-2"
+        />
+        <p class="text-center">Gra 3</p>
+      </div>
+      <!-- Opcjonalnie dodatkowy kafelek gry -->
+      <div class="bg-white rounded shadow p-4 flex flex-col items-center">
+        <img
+          src="{% static 'images/game4.png' %}"
+          alt="Gra 4"
+          class="mb-2"
+        />
+        <p class="text-center">Gra 4</p>
+      </div>
+    </div>
+  </section>
+</main>
+
 {% endblock %}
