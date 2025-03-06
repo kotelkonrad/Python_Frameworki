@@ -4,6 +4,10 @@
   "main": "scripts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "scss:dev": "sass ./static/scss/style.scss ./static/css/style.css --watch",
+    "tailwind:dev": "npx tailwindcss -i ./static/css/input_tailwind.css -o ./static/css/tailwind.css --watch",
+    "vite:build": "npx vite build",
+    "min:css": "postcss static/css/inputs/*.css --use cssnano --dir static/css/min",
     "build:css": "postcss static/css/main.css -o static/css/main.build.css",
     "watch:css": "postcss static/css/main.css -o static/css/main.build.css --watch"
   },
@@ -21,7 +25,7 @@
   "dependencies": {
     "autoprefixer": "^10.4.20",
     "chart.js": "^4.4.8",
-    "package.json": "^2.0.1",
+    "package.json": "^0.0.0",
     "tailwindcss": "^3.3.3"
   }
 }
