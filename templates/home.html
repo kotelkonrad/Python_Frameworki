@@ -2,75 +2,38 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Responsywny Header{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/main.build.css' %}">
-
 </head>
-<header class="bg-red-600 text-white p-4">
-  <div class="container mx-auto flex justify-between items-center">
-    <!-- Logo lub nazwa strony -->
-    <div class="text-2xl font-bold">Gry.pl</div>
+<body class="font-sans bg-white text-gray-900">
 
-    <!-- Menu nawigacyjne -->
-    <nav>
-      <ul class="flex space-x-4">
-        <li>
-          <a href="#" class="hover:underline">
-            Start
-          </a>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">
-            Akcja
-          </a>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">
-            Multiplayer
-          </a>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">
-            Dla dziewczyn
-          </a>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">
-            Symulatory
-          </a>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">
-            Zręcznościowe
-          </a>
-        </li>
-        <li>
-          <a href="#" class="hover:underline">
-            Sport
-          </a>
-        </li>
-        <!-- Zakładka 'O nas' (podkreślona) -->
-        <li>
-          <a href="{% url 'about' %}" class="underline font-semibold">
-            O nas
-          </a>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- Wyszukiwarka -->
-    <div>
-      <input
-        type="text"
-        placeholder="Wyszukaj grę..."
-        class="px-2 py-1 rounded border border-gray-300 text-black"
-      />
+<header class="bg-red-600 text-white flex flex-col md:flex-row items-center justify-between p-4">
+    <div class="flex items-center mb-4 md:mb-0">
+        <nav class="flex flex-col md:flex-row">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-10 w-10 mr-4">
+            <a href="#" class="hover:bg-red-500 px-3 py-1 rounded transition">Nowe</a>
+            <a href="#" class="hover:bg-red-500 px-3 py-1 rounded transition">Logiczne</a>
+            <a href="#" class="hover:bg-red-500 px-3 py-1 rounded transition">Akcje</a>
+            <a href="#" class="hover:bg-red-500 px-3 py-1 rounded transition">Multiplayer</a>
+            <a href="#" class="hover:bg-red-500 px-3 py-1 rounded transition">Dziewczyny</a>
+            <a href="#" class="hover:bg-red-500 px-3 py-1 rounded transition">Symulatory</a>
+            <a href="#" class="hover:bg-red-500 px-3 py-1 rounded transition">Zręcznościowe</a>
+            <a href="#" class="hover:bg-red-500 px-3 py-1 rounded transition">Sport</a>
+            <a href="#" class="hover:bg-red-500 px-3 py-1 rounded transition">MMO</a>
+            <a href="#" class="hover:bg-red-500 px-3 py-1 rounded transition">Dla Ciebie</a>
+        </nav>
     </div>
-  </div>
+    <div>
+        <input type="text" aria-label="Wyszukiwanie w witrynie" placeholder="Szukaj..." class="px-3 py-1 rounded text-gray-800">
+    </div>
 </header>
-<body>
-{% block content %}
 
-{% endblock %}
+<main class="container mx-auto px-4">
+    {% block content %}
+    {% endblock %}
+</main>
+
 </body>
 </html>

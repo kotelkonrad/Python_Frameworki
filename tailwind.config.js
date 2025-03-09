@@ -16,7 +16,13 @@ module.exports = {
         "justify-between",
         "items-center",
         "py-4",
-        "px-6"
+        "px-6",
+        "hidden",          // Dodane dla responsywności
+        "md:flex",         // Dodane dla menu na desktopie
+        "flex-col",        // Dodane dla mobile
+        "md:flex-row",     // Dodane dla desktopu
+        "md:items-center", // Dodane dla wyrównania
+        "md:space-x-4"     // Dodane dla odstępów
     ],
     theme: {
         extend: {
