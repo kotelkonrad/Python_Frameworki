@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Responsywny Header{% endblock %}</title>
+    <title>{% block title %}Gry{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/main.build.css' %}">
 </head>
 <body class="font-sans bg-white text-gray-900">
@@ -34,6 +34,17 @@
     {% block content %}
     {% endblock %}
 </main>
+
+<footer class="bg-red-800 text-white py-4">
+    <div class="container mx-auto text-center">
+        <p>&copy; 2024 Twoja Strona. Wszelkie prawa zastrzeżone.</p>
+        <nav class="flex justify-center space-x-4 mt-2">
+            <a href="/polityka-prywatnosci" class="hover:underline">Polityka Prywatności</a>
+            <a href="/regulamin" class="hover:underline">Regulamin</a>
+            <a href="/kontakt" class="hover:underline">Kontakt</a>
+        </nav>
+    </div>
+</footer>
 
 </body>
 </html>
