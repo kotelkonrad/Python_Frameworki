@@ -19,13 +19,18 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from app_Portal_Game.views import index
-from app_Portal_Game.views import about
+from app_Portal_Game.views.cms_views import home, about
+from app_Portal_Game.views.games_views import
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('about/', about, name='about'),
+    path('labirynt/', labirynt, name='labirynt'),
+    path('snake/', snake, name='snake'),
+    path('quiz/', quiz, name='quiz'),
+    path('tetris/', tetris, name='tetris'),
+
 ]
 
 if settings.DEBUG:

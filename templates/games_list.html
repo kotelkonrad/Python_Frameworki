@@ -1,0 +1,12 @@
+{% extends "home.html" %}
+{% block extrastyle %}
+{% load static %}
+{% endblock %}
+{% block content %}
+    <h1>Games</h1>
+    <ul>
+        {% for game in games %}
+            <li><a href="{% url 'game_detail' game.id %}">{{ game.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
