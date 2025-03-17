@@ -1,10 +1,57 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolorowy Tetris</title>
+    <!-- Dołączenie Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .cell {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            background-color: sandybrown;
+        }
+        .row-grid {
+            display: flex;
+            line-height: 0;
+        }
+        .block {
+            background-color: #007bff;
+        }
+        body {
+            background-color: cornsilk;
+        }
+    </style>
 </head>
 <body>
+    <!-- Użycie klas Bootstrapa do stylizacji -->
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="row">
+            <div class="col-md-8">
+                <div id="game-board"></div>
+            </div>
+            <div class="col-md-4">
+                <h3>Kolorowy Tetris</h3>
+                <h3>Punkty: <span id="score">0</span></h3>
+                <button id="start-btn" class="btn btn-primary">Start</button>
+                <button id="pause-btn" class="btn btn-secondary">Pauza</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- Dołączenie skryptów Bootstrapa i jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/tetris.js' %}"></script>
 </body>
 </html>
+{% endblock %}

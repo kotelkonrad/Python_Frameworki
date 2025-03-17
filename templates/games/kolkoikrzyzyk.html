@@ -1,0 +1,172 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kółko i Krzyżyk</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const board = document.getElementById("board");
+            const resultDisplay = document.getElementById("result");
+            const resetButton = document.getElementById("reset");
+            const scoreX = document.getElementById("scoreX");
+            const scoreO = document.getElementById("scoreO");
+            let currentPlayer = "X";
+            let cells = Array(9).fill(null);
+            let scores = { X: 0, O: 0 };
+            let gameActive = true;
+
+            function checkWinner() {
+                const winningCombinations = [
+                    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                    [0, 4, 8], [2, 4, 6]
+                ];
+
+                for (let combination of winningCombinations) {
+                    const [a, b, c] = combination;
+                    if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
+                        resultDisplay.textContent = `Gracz ${cells[a]} wygrywa!`;
+                        resultDisplay.classList.remove("is-hidden");
+                        resultDisplay.classList.add("notification", "is-primary");
+                        scores[cells[a]]++;
+                        updateScores();
+                        gameActive = false;
+                        return;
+                    }
+                }
+
+                if (!cells.includes(null)) {
+                    resultDisplay.textContent = "Remis!";
+                    resultDisplay.classList.remove("is-hidden");
+                    resultDisplay.classList.add("notification", "is-warning");
+                    gameActive = false;
+                }
+            }
+
+            function updateScores() {
+                scoreX.textContent = scores.X;
+                scoreO.textContent = scores.O;
+            }
+
+            function resetBoard() {
+                cells = Array(9).fill(null);
+                document.querySelectorAll(".cell").forEach(cell => {
+                    cell.textContent = "";
+                    cell.classList.remove("x-cell", "o-cell");
+                });
+                resultDisplay.textContent = "";
+                resultDisplay.className = "notification is-hidden";
+                currentPlayer = "X";
+                gameActive = true;
+            }
+
+            function handleClick(event) {
+                if (!gameActive) return;
+
+                const index = event.target.dataset.index;
+                if (!cells[index]) {
+                    cells[index] = currentPlayer;
+                    event.target.textContent = currentPlayer;
+                    event.target.classList.add(currentPlayer === "X" ? "x-cell" : "o-cell");
+                    checkWinner();
+                    currentPlayer = currentPlayer === "X" ? "O" : "X";
+                }
+            }
+
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement("div");
+                cell.classList.add("cell");
+                cell.dataset.index = i;
+                cell.addEventListener("click", handleClick);
+                board.appendChild(cell);
+            }
+
+            resetButton.addEventListener("click", resetBoard);
+        });
+    </script>
+    <style>
+        html, body {
+            background-color: #f0f8ff !important;
+            color: #000000 !important;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .game-container {
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            background: #add8e6;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .cell {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            transition: background 0.3s;
+            font-size: 2rem;
+            font-weight: bold;
+            background: #ffffff;
+        }
+        .cell:hover {
+            background-color: #ffebcd;
+        }
+        .x-cell {
+            background-color: #ff4500;
+            color: #ffffff;
+        }
+        .o-cell {
+            background-color: #4682b4;
+            color: white;
+        }
+        .notification {
+            font-size: 1.2rem;
+            background: #ffd700;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <section class="section">
+        <div class="container game-container">
+            <h1 class="title">Kółko i Krzyżyk</h1>
+            <div class="scoreboard">
+                <span>Gracz X: <span id="scoreX">0</span></span>
+                <span>Gracz O: <span id="scoreO">0</span></span>
+            </div>
+            <div id="result" class="notification is-hidden"></div>
+            <div id="board" class="board"></div>
+            <button id="reset" class="button is-danger mt-3">Resetuj grę</button>
+        </div>
+    </section>
+</body>
+</html>
+{% endblock %}

@@ -1,12 +1,20 @@
-{% extends "home.html" %}
-{% block extrastyle %}
+{% extends 'home.html' %}
 {% load static %}
+{% block extra_style %}
 {% endblock %}
+
 {% block content %}
-    <h1>Games</h1>
-    <ul>
-        {% for game in games %}
-            <li><a href="{% url 'game_detail' game.id %}">{{ game.name }}</a></li>
-        {% endfor %}
-    </ul>
+  <div class="flex flex-col md:flex-row md:space-x-6">
+    <h1>Lista gier</h1>
+    <br>
+    {% for game in games %}
+        {{ game.title }} <br>
+        {{ game.file }}
+    {% endfor %}
+
+  </div>
+{% endblock %}
+
+{% block extra_scripts %}
+
 {% endblock %}

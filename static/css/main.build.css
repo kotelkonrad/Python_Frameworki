@@ -557,8 +557,14 @@ video {
 .mt-2 {
   margin-top: 0.5rem;
 }
+.mt-3 {
+  margin-top: 0.75rem;
+}
 .mt-4 {
   margin-top: 1rem;
+}
+.mt-5 {
+  margin-top: 1.25rem;
 }
 .block {
   display: block;
@@ -596,6 +602,9 @@ video {
 .flex-col {
   flex-direction: column;
 }
+.flex-wrap {
+  flex-wrap: wrap;
+}
 .items-center {
   align-items: center;
 }
@@ -620,6 +629,9 @@ video {
 }
 .rounded {
   border-radius: 0.25rem;
+}
+.border {
+  border-width: 1px;
 }
 .bg-black {
   --tw-bg-opacity: 1;

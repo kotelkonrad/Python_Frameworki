@@ -16,24 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf import settings
-from django.conf.urls.static import static
-
-from app_Portal_Game.views.cms_views import home, about
-from app_Portal_Game.views.games_views import
+from app_Portal_Game.views.cms_views import home, about, kolkoikrzyzyk, quiz, snake, tetris
+from app_Portal_Game.views.games_views import games_index
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', index, name='index'),
+    path('', home, name='home'),
     path('about/', about, name='about'),
-    path('labirynt/', labirynt, name='labirynt'),
-    path('snake/', snake, name='snake'),
-    path('quiz/', quiz, name='quiz'),
-    path('tetris/', tetris, name='tetris'),
+    path('games/', games_index, name='games:index'),
+    path('admin/', admin.site.urls),
+    path('kolkoikrzyzyk/', kolkoikrzyzyk, name='games/kolkoikrzyzyk'),
+    path('quiz/', quiz, name='games/quiz'),
+    path('snake/', snake, name='games/snake'),
+    path('tetris/', tetris, name='games/tetris'),
 
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 
 
