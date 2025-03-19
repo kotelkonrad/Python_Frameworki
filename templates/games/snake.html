@@ -8,146 +8,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake</title>
     <style>
-        /* Styl CSS */
-        .grid {
-            width: 400px;
-            height: 400px;
-            display: flex;
-            flex-wrap: wrap;
+        canvas {
             border: 1px solid #000;
             margin: 20px auto;
-        }
-        .grid div {
-            width: 20px;
-            height: 20px;
-        }
-        .snake {
-            background-color: green;
-        }
-        .apple {
-            background-color: red;
-            border-radius: 50%;
-        }
-        .blue-food {
-            background-color: blue;
-            border-radius: 50%;
-        }
-        .wall {
-            background-color: darkred;
-        }
-        .collision {
-            background-color: darkred !important;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="grid">
-        <!-- Pole gry zostanie wygenerowane przez JavaScript -->
-    </div>
-    <p>Wynik: <span id="score">0</span></p>
+<canvas id="gameCanvas" width="400" height="400"></canvas>
+<p>Wynik: <span id="score">0</span></p>
 
-    <script>
-        const grid = document.querySelector('.grid');
-        const gridSize = 20;
-        let snake = [{ x: 10, y: 10 }];
-        let apple = { x: 15, y: 15 };
-        let blueFood = null;
-        let redWall = null;
-        let direction = 'right';
-        let nextDirection = 'right';
-        let speed = 200;
-        let score = 0;
-        let gameInterval;
-        let blueFoodTimeout;
-        let redWallTimeout;
-        const scoreDisplay = document.getElementById("score");
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const gridSize = 20;
+    const tileSize = 20;
+    let snake = [{x: 10, y: 10}];
+    let apple = {x: 15, y: 15};
+    let blueFood = null;
+    let redWall = null;
+    let direction = 'right';
+    let nextDirection = 'right';
+    let speed = 200;
+    let score = 0;
+    let gameOver = false;
+    let gameInterval;
+    const scoreDisplay = document.getElementById("score");
 
-        for (let i = 0; i < gridSize * gridSize; i++) {
-            const square = document.createElement('div');
-            grid.appendChild(square);
+    function draw() {
+        if (gameOver) {
+            displayGameOver();
+            return;
         }
-        const squares = document.querySelectorAll('.grid div');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'green';
+        snake.forEach(segment => ctx.fillRect(segment.x * tileSize, segment.y * tileSize, tileSize - 1, tileSize - 1));
+        ctx.fillStyle = 'red';
+        ctx.beginPath();
+        ctx.arc(apple.x * tileSize + tileSize / 2, apple.y * tileSize + tileSize / 2, tileSize / 2 - 1, 0, Math.PI * 2);
+        ctx.fill();
+        if (blueFood) {
+            ctx.fillStyle = 'blue';
+            ctx.beginPath();
+            ctx.arc(blueFood.x * tileSize + tileSize / 2, blueFood.y * tileSize + tileSize / 2, tileSize / 2 - 1, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        if (redWall) {
+            ctx.fillStyle = 'darkred';
+            if (redWall.side === 'top') ctx.fillRect(0, 0, canvas.width, 2);
+            if (redWall.side === 'bottom') ctx.fillRect(0, canvas.height - 2, canvas.width, 2);
+            if (redWall.side === 'left') ctx.fillRect(0, 0, 2, canvas.height);
+            if (redWall.side === 'right') ctx.fillRect(canvas.width - 2, 0, 2, canvas.height);
+        }
+    }
 
-        function draw() {
-            squares.forEach(square => square.classList.remove('snake', 'apple', 'blue-food', 'wall', 'collision'));
-            snake.forEach(segment => squares[segment.y * gridSize + segment.x].classList.add('snake'));
-            squares[apple.y * gridSize + apple.x].classList.add('apple');
-            if (blueFood) squares[blueFood.y * gridSize + blueFood.x].classList.add('blue-food');
-            if (redWall) squares[redWall.y * gridSize + redWall.x].classList.add('wall');
+    function displayGameOver() {
+        ctx.fillStyle = 'red';
+        ctx.font = '30px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Koniec gry!', canvas.width / 2, canvas.height / 2);
+    }
+
+    function move() {
+        if (gameOver) return;
+
+        direction = nextDirection;
+        const head = {x: snake[0].x, y: snake[0].y};
+
+        if (direction === 'right') head.x++;
+        else if (direction === 'left') head.x--;
+        else if (direction === 'up') head.y--;
+        else if (direction === 'down') head.y++;
+
+        if (head.x < 0 || head.x >= gridSize || head.y < 0 || head.y >= gridSize) {
+            direction = reverseDirection(direction);
+            nextDirection = direction;
+            return;
         }
 
-        function move() {
-            direction = nextDirection;
-            const head = { x: snake[0].x, y: snake[0].y };
-
-            if (direction === 'right') head.x++;
-            else if (direction === 'left') head.x--;
-            else if (direction === 'up') head.y--;
-            else if (direction === 'down') head.y++;
-
-            if (head.x < 0 || head.x >= gridSize || head.y < 0 || head.y >= gridSize) {
-                direction = reverseDirection(direction);
-                return;
-            }
-
-            if (redWall && head.x === redWall.x && head.y === redWall.y) {
+        if (redWall) {
+            if ((redWall.side === 'top' && head.y === 0) ||
+                (redWall.side === 'bottom' && head.y === gridSize - 1) ||
+                (redWall.side === 'left' && head.x === 0) ||
+                (redWall.side === 'right' && head.x === gridSize - 1)) {
+                gameOver = true;
+                displayGameOver();
                 clearInterval(gameInterval);
-                alert('Koniec gry! Uderzyłeś w czerwoną ścianę.');
                 return;
             }
+        }
 
-            if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+        let ateApple = false;
+
+        if (head.x === apple.x && head.y === apple.y) {
+            apple = {x: Math.floor(Math.random() * gridSize), y: Math.floor(Math.random() * gridSize)};
+            score++;
+            ateApple = true;
+        } else if (blueFood && head.x === blueFood.x && head.y === blueFood.y) {
+            if (score === 0) {
+                gameOver = true;
+                displayGameOver();
                 clearInterval(gameInterval);
-                alert('Koniec gry! Uderzyłeś w siebie.');
                 return;
-            }
-
-            snake.unshift(head);
-
-            if (head.x === apple.x && head.y === apple.y) {
-                apple = { x: Math.floor(Math.random() * gridSize), y: Math.floor(Math.random() * gridSize) };
-                score++;
-            } else if (blueFood && head.x === blueFood.x && head.y === blueFood.y) {
-                score = Math.max(0, score - 1);
-                snake.pop();
-                blueFood = null;
             } else {
-                snake.pop();
+                score--;
+                snake.pop(); // Usunięcie segmentu węża
+                blueFood = null; // Usunięcie niebieskiego kółka
             }
-
-            scoreDisplay.textContent = score;
-            draw();
         }
 
-        function reverseDirection(dir) {
-            if (dir === 'right') return 'left';
-            if (dir === 'left') return 'right';
-            if (dir === 'up') return 'down';
-            if (dir === 'down') return 'up';
+        snake.unshift(head);
+        if (!ateApple) {
+            snake.pop();
         }
 
-        function spawnBlueFood() {
-            blueFood = { x: Math.floor(Math.random() * gridSize), y: Math.floor(Math.random() * gridSize) };
-            setTimeout(() => blueFood = null, 10000);
-        }
+        scoreDisplay.textContent = score;
+        draw();
+    }
 
-        function spawnRedWall() {
-            redWall = { x: Math.floor(Math.random() * gridSize), y: Math.floor(Math.random() * gridSize) };
-            setTimeout(() => redWall = null, 10000);
-        }
+    function reverseDirection(dir) {
+        if (dir === 'right') return 'left';
+        if (dir === 'left') return 'right';
+        if (dir === 'up') return 'down';
+        if (dir === 'down') return 'up';
+    }
 
-        document.addEventListener('keydown', (e) => {
+    function spawnBlueFood() {
+        if (gameOver) return;
+        blueFood = {x: Math.floor(Math.random() * gridSize), y: Math.floor(Math.random() * gridSize)};
+        setTimeout(() => blueFood = null, 10000);
+    }
+
+    function spawnRedWall() {
+        if (gameOver) return;
+        const sides = ['top', 'bottom', 'left', 'right'];
+        redWall = {side: sides[Math.floor(Math.random() * sides.length)]};
+        setTimeout(() => redWall = null, 10000);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (gameOver) return;
+        if (score === 0 || snake.length === 1) {
+            if (e.key === 'ArrowUp') nextDirection = 'up';
+            else if (e.key === 'ArrowDown') nextDirection = 'down';
+            else if (e.key === 'ArrowLeft') nextDirection = 'left';
+            else if (e.key === 'ArrowRight') nextDirection = 'right';
+        } else {
             if (e.key === 'ArrowUp' && direction !== 'down') nextDirection = 'up';
             else if (e.key === 'ArrowDown' && direction !== 'up') nextDirection = 'down';
             else if (e.key === 'ArrowLeft' && direction !== 'right') nextDirection = 'left';
             else if (e.key === 'ArrowRight' && direction !== 'left') nextDirection = 'right';
-        });
+        }
+    });
 
-        draw();
-        gameInterval = setInterval(move, speed);
-        setInterval(spawnBlueFood, Math.random() * (18000 - 13000) + 13000);
-        setInterval(spawnRedWall, Math.random() * (13000 - 1000) + 1000);
-    </script>
+    draw();
+    gameInterval = setInterval(move, speed);
+    setInterval(spawnBlueFood, Math.random() * (18000 - 13000) + 13000);
+    setInterval(spawnRedWall, Math.random() * (13000 - 1000) + 1000);
+</script>
 </body>
 </html>
 {% endblock %}
