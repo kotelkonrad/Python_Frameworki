@@ -1,41 +1,46 @@
 {% extends 'home.html' %}
 {% load static %}
+
+{% block title %}Kolorowy Tetris{% endblock %}
+
 {% block content %}
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kolorowy Tetris</title>
-    <!-- Dołączenie Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: cornsilk;
-        }
-    </style>
-</head>
-<body>
-    <!-- Użycie klas Bootstrapa do stylizacji -->
-    <div class="container mt-5 d-flex justify-content-center">
-        <div class="row">
-            <div class="col-md-8">
-                <div id="game-board"></div>
-            </div>
-            <div class="col-md-4">
-                <h3>Kolorowy Tetris</h3>
-                <h3>Punkty: <span id="score">0</span></h3>
-                <button id="start-btn" class="btn btn-primary">Start</button>
-                <button id="pause-btn" class="btn btn-secondary">Pauza</button>
-            </div>
+<style>
+    body {
+        background-color: cornsilk;
+    }
+
+    #game-board {
+        width: 300px;
+        height: 600px;
+        border: 2px solid #333;
+        display: grid;
+        grid-template-rows: repeat(20, 1fr);
+    }
+
+    .row-grid {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+    }
+
+    .cell {
+        border: 1px solid #ddd;
+        background-color: #fff;
+    }
+</style>
+
+<div class="container mx-auto mt-5 flex justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="col-span-1">
+            <div id="game-board" class="border border-gray-500"></div>
+        </div>
+        <div class="col-span-1 flex flex-col items-center">
+            <h3 class="text-2xl font-bold mb-4">Kolorowy Tetris</h3>
+            <h3 class="text-xl mb-4">Punkty: <span id="score">0</span></h3>
+            <button id="start-btn" class="bg-blue-500 text-white px-4 py-2 rounded mb-2">Start</button>
+            <button id="pause-btn" class="bg-gray-500 text-white px-4 py-2 rounded">Pauza</button>
         </div>
     </div>
+</div>
 
-    <!-- Dołączenie skryptów Bootstrapa i jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{% static 'js/tetris.js' %}"></script>
-</body>
-</html>
+<script src="{% static 'js/tetris.js' %}"></script>
 {% endblock %}
