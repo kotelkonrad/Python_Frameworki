@@ -1,7 +1,6 @@
 const GRID_WIDTH = 10;
 const GRID_HEIGHT = 20;
 
-// Definicja kształtów tetromino – bez koloru
 const TETROMINO_SHAPES = {
     I: [[1, 1, 1, 1]],
     O: [[1, 1], [1, 1]],
@@ -12,20 +11,19 @@ const TETROMINO_SHAPES = {
     L: [[0, 0, 1], [1, 1, 1]]
 };
 
-// Lista dostępnych kolorów – kolor jest wybierany losowo przy spawnie
 const TETROMINO_COLORS = ['cyan', 'yellow', 'purple', 'green', 'red', 'blue', 'orange'];
 
 let grid = [];
 let currentTetromino = null;
 let currentColor = '';
-let currentTetrominoKey = ''; // przechowuje literę identyfikującą kształt
+let currentTetrominoKey = '';
 let position = { x: 4, y: 0 };
 let score = 0;
 let gameInterval = null;
 
 function initGrid() {
     const board = document.getElementById('game-board');
-    board.innerHTML = ''; // Czyścimy planszę przed rozpoczęciem gry
+    board.innerHTML = '';
     grid = [];
     for (let i = 0; i < GRID_HEIGHT; i++) {
         const row = document.createElement('div');
@@ -35,7 +33,6 @@ function initGrid() {
             const cell = document.createElement('div');
             cell.classList.add('cell');
             row.appendChild(cell);
-            // Każda komórka to nowy obiekt, aby nie dzielić referencji
             gridRow.push({ filled: 0, color: '' });
         }
         grid.push(gridRow);
@@ -174,7 +171,6 @@ function drop() {
     drawTetromino();
 }
 
-// Funkcja obracająca macierz (90° zgodnie z ruchem wskazówek zegara)
 function rotateMatrix(matrix) {
     const rotated = [];
     for (let i = 0; i < matrix[0].length; i++) {
@@ -186,12 +182,8 @@ function rotateMatrix(matrix) {
     return rotated;
 }
 
-// Funkcja zmieniająca kształt na inny – dozwolone tylko dla kształtów innych niż linia (I) i kwadrat (O)
-// Po zmianie kształtu kolor pozostaje bez zmian.
 function swapTetromino() {
-    if (currentTetrominoKey === 'I' || currentTetrominoKey === 'O') {
-        return;
-    }
+    if (currentTetrominoKey === 'I' || currentTetrominoKey === 'O') return;
     const allowedKeys = ['T', 'S', 'Z', 'J', 'L'];
     const randomKey = allowedKeys[Math.floor(Math.random() * allowedKeys.length)];
     const newShape = TETROMINO_SHAPES[randomKey];
@@ -199,12 +191,12 @@ function swapTetromino() {
         eraseTetromino();
         currentTetrominoKey = randomKey;
         currentTetromino = newShape;
-        // currentColor pozostaje niezmienione
         drawTetromino();
     }
 }
 
 document.addEventListener('keydown', (e) => {
+    if (!currentTetromino) return;
     eraseTetromino();
     switch (e.key) {
         case 'ArrowLeft':
@@ -217,15 +209,12 @@ document.addEventListener('keydown', (e) => {
             drop();
             break;
         case 'ArrowUp':
-            // Obracamy kształt tylko, jeśli nie jest to kwadrat (O)
             if (currentTetrominoKey !== 'O') {
                 const rotated = rotateMatrix(currentTetromino);
-                if (!checkCollision(0, 0, rotated)) {
-                    currentTetromino = rotated;
-                }
+                if (!checkCollision(0, 0, rotated)) currentTetromino = rotated;
             }
             break;
-        case 'c': // Zmiana kształtu – tylko dla kształtów innych niż I i O
+        case 'c':
             swapTetromino();
             break;
     }
