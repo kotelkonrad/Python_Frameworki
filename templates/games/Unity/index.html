@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity Web Player | My project</title>
-    <link rel="shortcut icon" href="../../../static/TemplateData/favicon.ico">
-    <link rel="stylesheet" href="../../../static/TemplateData/style.css">
+    <link rel="shortcut icon" href="{% static 'TemplateData/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'TemplateData/style.css' %}">
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -52,14 +52,14 @@
         updateBannerVisibility();
       }
 
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/WebGL Builds.loader.js";
+      var buildUrl = "{% static 'Build' %}";
+      var loaderUrl = buildUrl + "/WebGLBuilds.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/WebGL Builds.data",
-        frameworkUrl: buildUrl + "/WebGL Builds.framework.js",
-        codeUrl: buildUrl + "/WebGL Builds.wasm",
-        streamingAssetsUrl: "StreamingAssets",
+        dataUrl: buildUrl + "/WebGLBuilds.data",
+        frameworkUrl: buildUrl + "/WebGLBuilds.framework.js",
+        codeUrl: buildUrl + "/WebGLBuilds.wasm",
+        streamingAssetsUrl: "{% static 'StreamingAssets' %}",
         companyName: "DefaultCompany",
         productName: "My project",
         productVersion: "5.0.2",
