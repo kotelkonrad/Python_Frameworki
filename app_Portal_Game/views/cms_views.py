@@ -28,4 +28,4 @@ def tetris(request):
 def eaglercraft(request):
     return render(request, "games/eaglercraft.html")
 def unity(request):
-    return render(request, "games/Unity/index.html")
+    return render(request, "games/unity.html")
