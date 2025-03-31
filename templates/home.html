@@ -7,7 +7,7 @@
     <title>{% block title %}Gry{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/main.build.css' %}">
 </head>
-<body class="font-sans bg-white text-gray-900">
+<body class="font-sans bg-white text-gray-900 min-h-screen flex flex-col">
 
 <header class="bg-red-600 text-white flex flex-col md:flex-row items-center justify-between p-4">
     <div class="flex items-center mb-4 md:mb-0">
@@ -30,7 +30,7 @@
     </div>
 </header>
 
-<main class="container mx-auto px-4">
+<main class="container mx-auto px-4 flex-1">
     {% block content %}
     {% endblock %}
 </main>

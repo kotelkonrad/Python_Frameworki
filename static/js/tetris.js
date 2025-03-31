@@ -11,7 +11,7 @@ const TETROMINO_SHAPES = {
     L: [[0, 0, 1], [1, 1, 1]]
 };
 
-const TETROMINO_COLORS = ['cyan', 'yellow', 'purple', 'green', 'red', 'blue', 'orange'];
+const TETROMINO_COLORS = ['cyan', 'yellow', 'purple', 'green', 'red', 'blue', 'orange', 'pink'];
 
 let grid = [];
 let currentTetromino = null;
@@ -238,4 +238,36 @@ document.getElementById('pause-btn').addEventListener('click', () => {
     } else {
         gameInterval = setInterval(drop, 1000);
     }
+});
+document.getElementById('left-btn').addEventListener('click', () => {
+    if (!currentTetromino) return;
+    eraseTetromino();
+    if (!checkCollision(-1, 0)) position.x--;
+    drawTetromino();
+});
+
+document.getElementById('right-btn').addEventListener('click', () => {
+    if (!currentTetromino) return;
+    eraseTetromino();
+    if (!checkCollision(1, 0)) position.x++;
+    drawTetromino();
+});
+
+document.getElementById('down-btn').addEventListener('click', () => {
+    if (!currentTetromino) return;
+    drop();
+});
+
+document.getElementById('rotate-btn').addEventListener('click', () => {
+    if (!currentTetromino) return;
+    eraseTetromino();
+    if (currentTetrominoKey !== 'O') {
+        const rotated = rotateMatrix(currentTetromino);
+        if (!checkCollision(0, 0, rotated)) currentTetromino = rotated;
+    }
+    drawTetromino();
+});
+
+document.getElementById('swap-btn').addEventListener('click', () => {
+    swapTetromino();
 });
