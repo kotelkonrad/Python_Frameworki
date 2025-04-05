@@ -16,8 +16,24 @@
     </style>
 </head>
 <body>
-<canvas id="gameCanvas" width="400" height="400"></canvas>
-<p>Wynik: <span id="score">0</span></p>
+<canvas id="gameCanvas" width="400" height="400" class="rounded-xl shadow-2xl"></canvas>
+<div class="flex flex-col items-center font-bold text-2xl mt-4">
+    <p>Snake</p>
+    <p>Wynik: <span id="score" class="font-semibold">0</span></p>
+</div>
+<div class="flex justify-center mt-4">
+    <button id="up-btn" class="bg-blue-500 text-white px-4 py-2 m-1 rounded">Góra</button>
+</div>
+<div class="flex justify-center">
+    <button id="left-btn" class="bg-blue-500 text-white px-4 py-2 m-1 rounded">Lewo</button>
+    <button id="down-btn" class="bg-blue-500 text-white px-4 py-2 m-1 rounded">Dół</button>
+    <button id="right-btn" class="bg-blue-500 text-white px-4 py-2 m-1 rounded">Prawo</button>
+</div>
+<div class="flex justify-center mt-4">
+    <button id="start-btn" class="bg-green-500 text-white px-4 py-2 m-1 rounded">Start</button>
+    <button id="pause-btn" class="bg-yellow-500 text-white px-4 py-2 m-1 rounded">Pauza</button>
+    <button id="reset-btn" class="bg-red-500 text-white px-4 py-2 m-1 rounded">Reset</button>
+</div>
 
 <script>
     const canvas = document.getElementById('gameCanvas');
@@ -25,7 +41,7 @@
     const gridSize = 20;
     const tileSize = 20;
     let snake = [{x: 10, y: 10}];
-    let apple = {x: 15, y: 15};
+    let apple = [{x: 15, y: 15}];
     let blueFood = null;
     let redWall = null;
     let direction = 'right';
@@ -51,7 +67,7 @@
         if (blueFood) {
             ctx.fillStyle = 'blue';
             ctx.beginPath();
-            ctx.arc(blueFood.x * tileSize + tileSize / 2, blueFood.y * tileSize + tileSize / 2, tileSize / 2 - 1, 0, Math.PI * 2);
+            ctx.arc(blueFood.x * tileSize + tileSize / 2, blueFood.y * tileSize / 2, tileSize / 2 - 1, 0, Math.PI * 2);
             ctx.fill();
         }
         if (redWall) {
@@ -147,6 +163,39 @@
         setTimeout(() => redWall = null, 10000);
     }
 
+    function startGame() {
+        if (gameInterval) clearInterval(gameInterval);
+        gameOver = false;
+        snake = [{x: 10, y: 10}];
+        apple = {x: 15, y: 15};
+        direction = 'right';
+        nextDirection = 'right';
+        score = 0;
+        scoreDisplay.textContent = score;
+        gameInterval = setInterval(move, speed);
+    }
+
+    function pauseGame() {
+        if (gameInterval) {
+            clearInterval(gameInterval);
+            gameInterval = null;
+        } else {
+            gameInterval = setInterval(move, speed);
+        }
+    }
+
+    function resetGame() {
+        clearInterval(gameInterval);
+        gameOver = false;
+        snake = [{x: 10, y: 10}];
+        apple = {x: 15, y: 15};
+        direction = 'right';
+        nextDirection = 'right';
+        score = 0;
+        scoreDisplay.textContent = score;
+        draw();
+    }
+
     document.addEventListener('keydown', (e) => {
         if (gameOver) return;
         if (score === 0 || snake.length === 1) {
@@ -162,10 +211,27 @@
         }
     });
 
+    document.getElementById('up-btn').addEventListener('click', () => {
+        if (score === 0 || snake.length === 1 || direction !== 'down') nextDirection = 'up';
+    });
+
+    document.getElementById('down-btn').addEventListener('click', () => {
+        if (score === 0 || snake.length === 1 || direction !== 'up') nextDirection = 'down';
+    });
+
+    document.getElementById('left-btn').addEventListener('click', () => {
+        if (score === 0 || snake.length === 1 || direction !== 'right') nextDirection = 'left';
+    });
+
+    document.getElementById('right-btn').addEventListener('click', () => {
+        if (score === 0 || snake.length === 1 || direction !== 'left') nextDirection = 'right';
+    });
+
+    document.getElementById('start-btn').addEventListener('click', startGame);
+    document.getElementById('pause-btn').addEventListener('click', pauseGame);
+    document.getElementById('reset-btn').addEventListener('click', resetGame);
+
     draw();
-    gameInterval = setInterval(move, speed);
-    setInterval(spawnBlueFood, Math.random() * (18000 - 13000) + 13000);
-    setInterval(spawnRedWall, Math.random() * (13000 - 1000) + 1000);
 </script>
 </body>
 </html>
