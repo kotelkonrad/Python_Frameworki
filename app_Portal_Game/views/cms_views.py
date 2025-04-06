@@ -25,5 +25,3 @@ def quiz(request):
     return render(request, "games/quiz.html")
 def tetris(request):
     return render(request, "games/tetris.html")
-def eaglercraft(request):
-    return render(request, "games/eaglercraft.html")
