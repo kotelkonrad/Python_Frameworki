@@ -2,3 +2,4 @@
 /.venv/
 .idea
 db.sqlite3
+/static/css/main.build.css
