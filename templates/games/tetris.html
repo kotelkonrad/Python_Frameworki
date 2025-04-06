@@ -29,15 +29,24 @@
 </style>
 
 <div class="container mx-auto mt-5 flex justify-center">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="col-span-1">
-            <div id="game-board" class="border border-gray-500"></div>
-        </div>
-        <div class="col-span-1 flex flex-col items-center">
-            <h3 class="text-2xl font-bold mb-4">Kolorowy Tetris</h3>
+    <div class="grid grid-rows-1 md:grid-rows-1 gap-4">
+        <div class="row-span-1 flex flex-col items-center">
+           <h3 class="text-2xl font-bold mb-4">Kolorowy Tetris</h3>
             <h3 class="text-xl mb-4">Punkty: <span id="score">0</span></h3>
+        </div>
+        <div class="row-span-1">
+            <div id="game-board" class="border border-gray-500 rounded-md shadow-md"></div>
+        </div>
+        <div class="row-span-1 flex flex-col items-center">
             <button id="start-btn" class="bg-blue-500 text-white px-4 py-2 rounded mb-2">Start</button>
-            <button id="pause-btn" class="bg-gray-500 text-white px-4 py-2 rounded">Pauza</button>
+            <button id="pause-btn" class="bg-gray-500 text-white px-4 py-2 rounded mb-4">Pauza</button>
+            <div class="grid grid-cols-3 gap-2">
+                <button id="left-btn" class="bg-red-500 text-white px-4 py-2 rounded">Lewo</button>
+                <button id="down-btn" class="bg-green-500 text-white px-4 py-2 rounded">Dół</button>
+                <button id="right-btn" class="bg-yellow-500 text-white px-4 py-2 rounded">Prawo</button>
+                <button id="rotate-btn" class="bg-purple-500 text-white px-4 py-2 rounded col-span-3">Obróć</button>
+                <button id="swap-btn" class="bg-orange-500 text-white px-4 py-2 rounded col-span-3">Zmień kształt</button>
+            </div>
         </div>
     </div>
 </div>
