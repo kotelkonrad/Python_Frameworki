@@ -1,0 +1,13 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block content %}
+<div class="flex justify-center items-center min-h-screen bg-white">
+  <div class="relative w-full max-w-[1280px] aspect-video rounded-xl shadow-lg overflow-hidden border border-gray-200">
+    <iframe
+      src="{% static 'games/myproject/unitystatic.html' %}"
+      class="absolute top-0 left-0 w-full h-full border-0"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>
+{% endblock %}

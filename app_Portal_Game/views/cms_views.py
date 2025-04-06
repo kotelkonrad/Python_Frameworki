@@ -25,3 +25,5 @@ def quiz(request):
     return render(request, "games/quiz.html")
 def tetris(request):
     return render(request, "games/tetris.html")
+def unity(request):
+    return render(request, "games/unity.html")
