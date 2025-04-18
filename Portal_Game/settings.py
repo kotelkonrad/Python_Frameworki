@@ -59,16 +59,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-# Allow .wasm MIME and skip double-compression on Unity outputs
+
+# Dodatkowe konfiguracje dla WhiteNoise
 mimetypes.add_type("application/wasm", ".wasm", True)
 WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['.wasm', '.unityweb', ".data"]
-
-# Map .js.gz to JS and .data.gz to octet-stream
 WHITENOISE_MIMETYPES = {
     ".js.gz":    "application/javascript",
     ".data.gz":  "application/octet-stream",
@@ -140,8 +134,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
