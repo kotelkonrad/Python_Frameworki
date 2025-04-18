@@ -12,8 +12,10 @@ class GzipHeaderMiddleware:
         path = request.path.lower()
         if path.endswith(".js.gz"):
             response["Content-Encoding"] = "gzip"
-            response["Content-Type"]     = "application/javascript"
+            response["Content-Type"] = "application/javascript"
         elif path.endswith(".data.gz"):
             response["Content-Encoding"] = "gzip"
-            response["Content-Type"]     = "application/octet-stream"
+            response["Content-Type"] = "application/octet-stream"
+        elif path.endswith(".wasm"):
+            response["Content-Type"] = "application/wasm"
         return response
