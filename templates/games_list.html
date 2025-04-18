@@ -4,17 +4,24 @@
 {% endblock %}
 
 {% block content %}
-  <div class="flex flex-col md:flex-row md:space-x-6">
-    <h1>Lista gier</h1>
-    <br>
-    {% for game in games %}
-        {{ game.title }} <br>
-        {{ game.file }}
-    {% endfor %}
-
-  </div>
+    <div class="flex flex-col md:flex-row md:space-x-6">
+        <h1>Lista gier</h1>
+        <br>
+        {% if games %}
+            <ul>
+                {% for game in games %}
+                    <li>
+                        <h2>{{ game.title }}</h2>
+                        <p>{{ game.content }}</p>
+                        <a href="{{ game.file.url }}" download>Pobierz grę</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Brak dostępnych gier.</p>
+        {% endif %}
+    </div>
 {% endblock %}
 
 {% block extra_scripts %}
-
 {% endblock %}

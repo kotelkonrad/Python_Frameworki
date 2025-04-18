@@ -4,43 +4,43 @@
 {% block title %}Kolorowy Tetris{% endblock %}
 
 {% block content %}
-<style>
-    body {
-        background-color: cornsilk;
-    }
+    <style>
+        body {
+            background-color: cornsilk;
+        }
 
-    #game-board {
-        width: 300px;
-        height: 600px;
-        border: 2px solid #333;
-        display: grid;
-        grid-template-rows: repeat(20, 1fr);
-    }
+        #game-board {
+            width: 300px;
+            height: 600px;
+            border: 2px solid #333;
+            display: grid;
+            grid-template-rows: repeat(20, 1fr);
+        }
 
-    .row-grid {
-        display: grid;
-        grid-template-columns: repeat(10, 1fr);
-    }
+        .row-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+        }
 
-    .cell {
-        border: 1px solid #ddd;
-        background-color: #fff;
-    }
-</style>
+        .cell {
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+    </style>
 
-<div class="container mx-auto mt-5 flex justify-center">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="col-span-1">
-            <div id="game-board" class="border border-gray-500"></div>
-        </div>
-        <div class="col-span-1 flex flex-col items-center">
-            <h3 class="text-2xl font-bold mb-4">Kolorowy Tetris</h3>
-            <h3 class="text-xl mb-4">Punkty: <span id="score">0</span></h3>
-            <button id="start-btn" class="bg-blue-500 text-white px-4 py-2 rounded mb-2">Start</button>
-            <button id="pause-btn" class="bg-gray-500 text-white px-4 py-2 rounded">Pauza</button>
+    <div class="container mx-auto mt-5 flex justify-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="col-span-1">
+                <div id="game-board" class="border border-gray-500"></div>
+            </div>
+            <div class="col-span-1 flex flex-col items-center">
+                <h3 class="text-2xl font-bold mb-4">Kolorowy Tetris</h3>
+                <h3 class="text-xl mb-4">Punkty: <span id="score">0</span></h3>
+                <button id="start-btn" class="bg-blue-500 text-white px-4 py-2 rounded mb-2">Start</button>
+                <button id="pause-btn" class="bg-gray-500 text-white px-4 py-2 rounded">Pauza</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="{% static 'js/tetris.js' %}"></script>
+    <script src="{% static 'js/tetris.js' %}"></script>
 {% endblock %}

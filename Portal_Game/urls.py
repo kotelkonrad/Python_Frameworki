@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app_Portal_Game.views.cms_views import home, about, kolkoikrzyzyk, quiz, snake, tetris, unity, strzelanka
-from app_Portal_Game.views.games_views import games_index
+from app_Portal_Game.views.games_views import games_index, search
 
 urlpatterns = [
     path('', home, name='home'),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('tetris/', tetris, name='games/tetris'),
     path('unity/', unity, name='games/unity'),
     path('strzelanka/', strzelanka, name='games/strzelanka'),
+    path('search/', search, name='search'),
 ]
 
 
