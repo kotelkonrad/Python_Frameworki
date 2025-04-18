@@ -1,16 +1,16 @@
 {% extends 'home.html' %}
 {% load static %}
 {% block content %}
-<div class="container mx-auto mt-5">
-    <h1 class="text-3xl font-bold mb-4">Quiz</h1>
-    <div id="quiz-container" class="bg-white p-5 rounded shadow-md">
-        <div id="question" class="text-xl mb-4">Pytanie pojawi się tutaj</div>
-        <div id="answers" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Odpowiedzi pojawią się tutaj -->
+    <div class="container mx-auto mt-5">
+        <h1 class="text-3xl font-bold mb-4">Quiz</h1>
+        <div id="quiz-container" class="bg-white p-5 rounded shadow-md">
+            <div id="question" class="text-xl mb-4">Pytanie pojawi się tutaj</div>
+            <div id="answers" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Odpowiedzi pojawią się tutaj -->
+            </div>
+            <button id="next-btn" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Następne pytanie</button>
         </div>
-        <button id="next-btn" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Następne pytanie</button>
+        <div id="result" class="mt-5 text-xl font-bold"></div>
     </div>
-    <div id="result" class="mt-5 text-xl font-bold"></div>
-</div>
-<script src="{% static 'js/quiz.js' %}"></script>
+    <script src="{% static 'js/quiz.js' %}"></script>
 {% endblock %}

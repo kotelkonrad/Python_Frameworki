@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import mimetypes
 from pathlib import Path
 import os
 
@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'app_Portal_Game.middleware.GzipHeaderMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -54,7 +56,18 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'Portal_Game.urls'
 # Konfiguracja plików statycznych
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Dodatkowe konfiguracje dla WhiteNoise
+mimetypes.add_type("application/wasm", ".wasm", True)
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['.wasm', '.unityweb', ".data"]
+WHITENOISE_MIMETYPES = {
+    ".js.gz":    "application/javascript",
+    ".data.gz":  "application/octet-stream",
+}
+
 # Ścieżka do przechowywania wgranych plików
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -121,8 +134,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

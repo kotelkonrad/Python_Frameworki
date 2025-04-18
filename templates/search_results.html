@@ -1,0 +1,19 @@
+{% extends 'home.html' %}
+{% block content %}
+    <h1>Wyniki wyszukiwania</h1>
+    <p>Wyszukiwane hasło: "{{ query }}"</p>
+
+    {% if results %}
+        <ul>
+            {% for result in results %}
+                <li>
+                    <h2>{{ result.title }}</h2>
+                    <p>{{ result.content }}</p>
+                    <a href="{{ result.file.url }}" download>Pobierz grę</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Brak wyników dla podanego hasła.</p>
+    {% endif %}
+{% endblock %}
