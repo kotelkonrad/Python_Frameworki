@@ -10,8 +10,8 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Stage 2: Konfiguracja środowiska Python/Django
-FROM python:3.11-slim
+# Stage 2: Konfiguracja środowiska Python/Django na Pythonie 3.10
+FROM python:3.10-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 WORKDIR /app
