@@ -9,7 +9,9 @@
     "vite:build": "vite build",
     "min:css": "postcss static/css/inputs/*.css --use cssnano --dir static/css/min",
     "build:css": "postcss static/css/main.css -o static/css/main.build.css",
-    "watch:css": "postcss static/css/main.css -o static/css/main.build.css --watch"
+    "watch:css": "postcss static/css/main.css -o static/css/main.build.css --watch",
+    "build": "npm run build && python manage.py migrate && python manage.py collectstatic --noinput",
+    "start": "gunicorn Portal_Game.wsgi --bind 0.0.0.0:$PORT"
   },
   "author": "",
   "license": "ISC",
