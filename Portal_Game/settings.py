@@ -61,7 +61,13 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Allow .wasm MIME and skip double-compression on Unity outputs
 mimetypes.add_type("application/wasm", ".wasm", True)
-WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['.wasm', '.unityweb']
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['.wasm', '.unityweb', ".data"]
+
+# Map .js.gz to JS and .data.gz to octet-stream
+WHITENOISE_MIMETYPES = {
+    ".js.gz":    "application/javascript",
+    ".data.gz":  "application/octet-stream",
+}
 
 # Ścieżka do przechowywania wgranych plików
 MEDIA_URL = '/media/'
