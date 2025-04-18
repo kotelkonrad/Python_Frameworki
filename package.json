@@ -9,7 +9,8 @@
     "vite:build": "vite build",
     "min:css": "postcss static/css/inputs/*.css --use cssnano --dir static/css/min",
     "build:css": "postcss static/css/main.css -o static/css/main.build.css",
-    "watch:css": "postcss static/css/main.css -o static/css/main.build.css --watch"
+    "watch:css": "postcss static/css/main.css -o static/css/main.build.css --watch",
+    "migrate": "python manage.py migrate"
   },
   "author": "",
   "license": "ISC",
