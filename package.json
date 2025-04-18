@@ -6,12 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "scss:dev": "sass ./static/scss/style.scss ./static/css/style.css --watch",
     "tailwind:dev": "npx tailwindcss -i ./static/css/input_tailwind.css -o ./static/css/tailwind.css --watch",
-    "vite:build": "vite build",
     "min:css": "postcss static/css/inputs/*.css --use cssnano --dir static/css/min",
     "build:css": "postcss static/css/main.css -o static/css/main.build.css",
-    "watch:css": "postcss static/css/main.css -o static/css/main.build.css --watch",
-    "build": "npm run vite:build"
-  },
+    "watch:css": "postcss static/css/main.css -o static/css/main.build.css --watch",},
   "author": "",
   "license": "ISC",
   "description": "",
