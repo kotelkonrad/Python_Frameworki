@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import mimetypes
 from pathlib import Path
 import os
 
@@ -58,6 +58,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Allow .wasm MIME and skip double-compression on Unity outputs
+mimetypes.add_type("application/wasm", ".wasm", True)
+WHITENOISE_SKIP_COMPRESS_EXTENSIONS = ['.wasm', '.unityweb']
+
 # Ścieżka do przechowywania wgranych plików
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
