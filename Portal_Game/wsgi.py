@@ -11,11 +11,8 @@ import os
 from django.core.wsgi import get_wsgi_application
 from whitenoise import WhiteNoise
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Portal_Game.settings')
-
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Portal_Game.settings")
 application = get_wsgi_application()
-application = WhiteNoise(
-    application,
-    root=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
-)
+static_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static")
+application = WhiteNoise(application, root=static_path)
 application.use_finders = True
